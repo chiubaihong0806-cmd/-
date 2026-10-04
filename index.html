@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>發家致富</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 400px;
+            box-sizing: border-box;
+        }
+        /* 分頁標籤樣式 */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .tab {
+            font-size: 16px;
+            color: #888;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .tab.active {
+            color: #007bff;
+            border-bottom: 3px solid #007bff;
+        }
+        /* 內容區塊控制 */
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        /* 兩頁完全統一的結果樣式框 */
+        .result-box {
+            margin: 30px 0;
+            min-height: 90px;
+            line-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* 防止文字溢出框外 */
+        }
+        /* 問號與文字的基礎樣式：預設一律 72px 藍色加粗 */
+        .result-text {
+            font-size: 72px;
+            font-weight: bold;
+            color: #007bff;
+            white-space: nowrap; /* 強制不換行 */
+            transition: font-size 0.1s ease; /* 縮放時有一點小動畫更流暢 */
+        }
+        /* 按鈕樣式 */
+        button {
+            padding: 15px 40px;
+            font-size: 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 頂部分頁切換 -->
+    <div class="tabs">
+        <span class="tab active" id="tab1" onclick="switchPage(1)">頻道</span>
+        <span class="tab" id="tab2" onclick="switchPage(2)">幸運女神眷顧之地</span>
+    </div>
+
+    <!-- 第一頁：頻道 -->
+    <div class="page active" id="page1">
+        <div class="result-box">
+            <div class="result-text" id="resultNum1">?</div>
+        </div>
+        <button onclick="drawNumber()">就決定是你了</button>
+    </div>
+
+    <!-- 第二頁：幸運女神眷顧之地 -->
+    <div class="page" id="page2">
+        <div class="result-box">
+            <div class="result-text" id="resultNum2">?</div>
+        </div>
+        <button onclick="drawLocation()">就決定是你了</button>
+    </div>
+</div>
+
+<script>
+    // 第二頁的隨機地點清單
+    const locations = [
+        "狐狸神寶座", "麗娜家", "眾神之地", "櫻花樹頂", 
+        "尖塔", "耶雷佛", "傾斜之塔", "絕好調旁邊", 
+        "啊啊身旁", "李哥身旁", "高頑身旁", "F2車上", 
+        "柒柒的家", "小丑桌下", "墮落城市 電線桿旁", "勇士之村 鐵匠旁"
+    ];
+
+    // 分頁切換邏輯
+    function switchPage(pageNum) {
+        document.getElementById('page1').classList.remove('active');
+        document.getElementById('page2').classList.remove('active');
+        document.getElementById('tab1').classList.remove('active');
+        document.getElementById('tab2').classList.remove('active');
+
+        document.getElementById('page' + pageNum).classList.add('active');
+        document.getElementById('tab' + pageNum).classList.add('active');
+    }
+
+    // 自動依據文字長度調整字體大小的工具函式
+    function adjustFontSize(element, text) {
+        element.innerText = text;
+        // 如果字數大於 4 個字，開始依據長度等比例縮小字體（基礎 72px）
+        if (text.length > 4) {
+            if (text.length > 8) {
+                element.style.fontSize = "32px"; // 最長的地名（如9-10字）用 32px
+            } else {
+                element.style.fontSize = "44px"; // 中等長度地名用 44px
+            }
+        } else {
+            element.style.fontSize = "72px"; // 4字以內（包含問號與數字）一律維持 72px
+        }
+    }
+
+    // 第一頁：隨機數字邏輯 (1-20)
+    function drawNumber() {
+        const resultDiv = document.getElementById('resultNum1');
+        let count = 0;
+        const interval = setInterval(() => {
+            const text = Math.floor(Math.random() * 20) + 1;
+            adjustFontSize(resultDiv, text.toString());
+            count++;
+            if (count > 10) {
+                clearInterval(interval);
+                const finalText = Math.floor(Math.random() * 20) + 1;
+                adjustFontSize(resultDiv, finalText.toString());
+            }
+        }, 50);
+    }
+
+    // 第二頁：隨機地點邏輯
+    function drawLocation() {
+        const resultDiv = document.getElementById('resultNum2');
+        let count = 0;
+        const interval = setInterval(() => {
+            const randomIdx = Math.floor(Math.random() * locations.length);
+            adjustFontSize(resultDiv, locations[randomIdx]);
+            count++;
+            if (count > 10) {
+                clearInterval(interval);
+                const finalIdx = Math.floor(Math.random() * locations.length);
+                adjustFontSize(resultDiv, locations[finalIdx]);
+            }
+        }, 50);
+    }
+</script>
+
+</body>
+</html>
