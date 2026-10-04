@@ -9,16 +9,16 @@
 
     <!-- 2. 社群分享（LINE / Discord / FB）預覽卡片設定 -->
     <meta property="og:title" content="發家致富">
-    <meta property="og:description" content="今天要在哪個頻道、哪裡打王呢？點擊挑選你的幸運之地！">
+    <meta property="og:description" content="凌霄閣的凌是數字0">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://github.io">
-    <!-- 預設放了一張適合遊戲、抽獎氛圍的質感金骰子縮圖，讓分享卡片更美觀 -->
+    <!-- 預設金骰子縮圖 -->
     <meta property="og:image" content="https://unsplash.com">
     
     <!-- Twitter / X 預覽卡片 -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="發家致富">
-    <meta name="twitter:description" content="今天要在哪個頻道、哪裡打王呢？點擊挑選你的幸運之地！">
+    <meta name="twitter:description" content="凌霄閣的凌是數字0">
     <meta name="twitter:image" content="https://unsplash.com">
 
     <style>
@@ -155,15 +155,14 @@
     // 自動依據文字長度調整字體大小的工具函式
     function adjustFontSize(element, text) {
         element.innerText = text;
-        // 如果字數大於 4 個字，開始依據長度等比例縮小字體（基礎 72px）
         if (text.length > 4) {
             if (text.length > 8) {
-                element.style.fontSize = "32px"; // 最長的地名（如9-10字）用 32px
+                element.style.fontSize = "32px"; 
             } else {
-                element.style.fontSize = "44px"; // 中等長度地名用 44px
+                element.style.fontSize = "44px"; 
             }
         } else {
-            element.style.fontSize = "72px"; // 4字以內（包含問號與數字）一律維持 72px
+            element.style.fontSize = "72px"; 
         }
     }
 
